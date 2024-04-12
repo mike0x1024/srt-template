@@ -1,6 +1,6 @@
 # Forge Template
 
-A template for quickly getting started with forge
+A Soul Resonance Token template for ERC20, ERC721 and ERC1155
 
 ## Getting Started
 
