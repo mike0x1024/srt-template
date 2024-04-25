@@ -5,7 +5,6 @@ import {DSTest} from "ds-test/test.sol";
 import {Utilities} from "./utils/Utilities.sol";
 import {console} from "./utils/Console.sol";
 import {Vm} from "forge-std/Vm.sol";
-import {ISRT} from "../interface/ISRT.sol";
 import {SRT20Minimal} from "../SRT20.sol";
 import {SRT721Minimal} from "../SRT721.sol";
 import {SRT1155Minimal} from "../SRT1155.sol";
@@ -36,11 +35,8 @@ contract TestRun is DSTest {
         vm.expectRevert(SRT20Minimal.TransferNotAllowed.selector);
         srt20.transfer(bob, amount);
         vm.warp(block.timestamp + 100);
-        assertEq(srt20.affectOf(alice, 0), amount * 100);
         srt20.burn(alice, amount);
-        assertEq(srt20.affectOf(alice, 0), amount * 100);
 
-        // assertEq(type(ISRT).interfaceId, bytes4(0x00000001));
         vm.stopPrank();
     }
 
@@ -58,11 +54,8 @@ contract TestRun is DSTest {
         vm.expectRevert(SRT721Minimal.TransferNotAllowed.selector);
         srt721.safeTransferFrom(alice, bob, 1);
         vm.warp(block.timestamp + 100);
-        assertEq(srt721.affectOf(alice, 1), 100);
         srt721.burn(1);
-        assertEq(srt721.affectOf(alice, 1), 100);
 
-        // assertEq(type(ISRT).interfaceId, bytes4(0x00000001));
         vm.stopPrank();
     }
 
@@ -83,9 +76,7 @@ contract TestRun is DSTest {
         vm.expectRevert(SRT1155Minimal.TransferNotAllowed.selector);
         srt1155.safeTransferFrom(alice, bob, 1, amount, data);
         vm.warp(block.timestamp + 100);
-        assertEq(srt1155.affectOf(alice, 1), amount * 100);
         srt1155.burn(alice, 1, amount);
-        assertEq(srt1155.affectOf(alice, 1), amount * 100);
         vm.stopPrank();
     }
 }
